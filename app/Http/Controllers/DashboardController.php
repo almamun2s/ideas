@@ -8,14 +8,8 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function index(){
-        $idea = new Idea([
-            'content' => 'Test from idea'
-        ]);
-        // dd(Idea::all());
-        // $idea->content = "Test idea";
-        // $idea->save();
         return view('dashboard', [
-            'ideas' => Idea::all()
+            'ideas' => Idea::orderBy('id', 'desc')->get()
         ]);
     }
 }
