@@ -14,6 +14,6 @@ class IdeaController extends Controller
         ]);
         $idea->save();
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with('success', 'Idea created Successfully!');
     }
 }
