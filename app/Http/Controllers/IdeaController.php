@@ -19,6 +19,7 @@ class IdeaController extends Controller
         return view('ideas.show', compact('idea'));
     }
 
+
     /**
      * Creating Ideas in database
      *
@@ -45,5 +46,25 @@ class IdeaController extends Controller
         $idea->delete();
 
         return redirect()->route('dashboard')->with('success', 'Idea Deleted Successfully!');
+    }
+    /**
+     * Show single Idea
+     *
+     * @param Idea $idea
+     */
+    public function edit(Idea $idea){
+        return view('ideas.show', [
+            'idea'      => $idea,
+            'editing'   => true 
+        ]);
+    }
+    public function update(Idea $idea){
+        request()->validate([
+            'idea'  => 'required|min:5|max:255'
+        ]);
+        $idea->content = request()->get('idea');
+        $idea->save();
+
+        return redirect()->route('ideas.show', $idea->id )->with('success', 'Idea updated Successfully!');
     }
 }

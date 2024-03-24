@@ -13,14 +13,33 @@
                 <form action=" {{ route('ideas.destroy', $idea->id) }} " method="post">
                     @csrf
                     @method('delete')
-                    <button class="btn btn-danger btn-sm" >X</button>
+                    <a class="mx-2" href="{{ route('ideas.edit', $idea->id) }} ">Edit </a>
+                    <a class="mx-2" href="{{ route('ideas.show', $idea->id) }} ">View</a>
+                    <button class="btn btn-danger btn-sm">X</button>
                 </form>
-                <a href="{{route('ideas.show', $idea->id )}} ">View</a>
             </div>
         </div>
     </div>
     <div class="card-body">
-        <p class="fs-6 fw-light text-muted">{{ $idea->content }} </p>
+        @if ($editing ?? false)
+            <div class="row">
+                <form action="{{ route('ideas.update', $idea->id) }} " method="post">
+                    @csrf
+                    @method('put')
+                    <div class="mb-3">
+                        <textarea name="idea" class="form-control" id="idea" rows="3" style="resize: none;" autofocus>{{ $idea->content }}</textarea>
+                        @error('idea')
+                            <span class="text-danger d-block mt-2"> {{ $message }} </span>
+                        @enderror
+                    </div>
+                    <div class="">
+                        <button type="submit" class="btn btn-dark"> Update </button>
+                    </div>
+                </form>
+            </div>
+        @else
+            <p class="fs-6 fw-light text-muted">{{ $idea->content }} </p>
+        @endif
         <div class="d-flex justify-content-between">
             <div>
                 <a href="#" class="fw-light nav-link fs-6"> <span class="fas fa-heart me-1">

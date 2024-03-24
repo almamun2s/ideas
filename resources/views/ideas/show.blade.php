@@ -39,6 +39,7 @@
         </div>
         <div class="col-6">
             <div class="mt-3">
+                @include('shared.success_message')
                 @include('shared.idea_card')
             </div>
         </div>
