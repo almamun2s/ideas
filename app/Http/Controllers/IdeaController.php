@@ -8,6 +8,18 @@ use Illuminate\Http\Request;
 class IdeaController extends Controller
 {
     /**
+     * Show single Idea
+     *
+     * @param Idea $idea
+     */
+    public function show(Idea $idea){
+        // return view('ideas.show', [
+        //     'idea'  => $idea
+        // ]);
+        return view('ideas.show', compact('idea'));
+    }
+
+    /**
      * Creating Ideas in database
      *
      */
@@ -27,11 +39,11 @@ class IdeaController extends Controller
     /**
      * Delete Idea from Database
      *
-     * @param int $id
+     * @param Idea $idea
      */
-    public function destroy(int $id){
-        Idea::where('id', $id )->firstOrFail()->delete();
-        
+    public function destroy(Idea $idea){
+        $idea->delete();
+
         return redirect()->route('dashboard')->with('success', 'Idea Deleted Successfully!');
     }
 }
