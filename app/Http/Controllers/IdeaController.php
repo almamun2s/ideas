@@ -12,7 +12,8 @@ class IdeaController extends Controller
      *
      * @param Idea $idea
      */
-    public function show(Idea $idea){
+    public function show(Idea $idea)
+    {
         // return view('ideas.show', [
         //     'idea'  => $idea
         // ]);
@@ -26,13 +27,10 @@ class IdeaController extends Controller
      */
     public function store()
     {
-        request()->validate([
-            'idea'  => 'required|min:5|max:255'
+        $validate = request()->validate([
+            'content' => 'required|min:5|max:255'
         ]);
-        $idea = Idea::create([
-            'content' => request()->get('idea')
-        ]);
-        $idea->save();
+        Idea::create($validate);
 
         return redirect()->route('dashboard')->with('success', 'Idea created Successfully!');
     }
@@ -42,7 +40,8 @@ class IdeaController extends Controller
      *
      * @param Idea $idea
      */
-    public function destroy(Idea $idea){
+    public function destroy(Idea $idea)
+    {
         $idea->delete();
 
         return redirect()->route('dashboard')->with('success', 'Idea Deleted Successfully!');
@@ -52,19 +51,26 @@ class IdeaController extends Controller
      *
      * @param Idea $idea
      */
-    public function edit(Idea $idea){
+    public function edit(Idea $idea)
+    {
         return view('ideas.show', [
-            'idea'      => $idea,
-            'editing'   => true 
+            'idea' => $idea,
+            'editing' => true
         ]);
     }
-    public function update(Idea $idea){
-        request()->validate([
-            'idea'  => 'required|min:5|max:255'
-        ]);
-        $idea->content = request()->get('idea');
-        $idea->save();
 
-        return redirect()->route('ideas.show', $idea->id )->with('success', 'Idea updated Successfully!');
+    /**
+     * Update Idea in database
+     *
+     * @param Idea $idea
+     */
+    public function update(Idea $idea)
+    {
+        $validate = request()->validate([
+            'content' => 'required|min:5|max:255'
+        ]);
+        $idea->update($validate);
+
+        return redirect()->route('ideas.show', $idea->id)->with('success', 'Idea updated Successfully!');
     }
 }
