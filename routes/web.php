@@ -3,7 +3,6 @@
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IdeaController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,21 +18,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::post('/ideas', [IdeaController::class, 'store'])->name('ideas.store')->middleware('auth');
-Route::get('/ideas/{idea}', [IdeaController::class, 'show'])->name('ideas.show');
-Route::get('/ideas/{idea}/edit', [IdeaController::class, 'edit'])->name('ideas.edit')->middleware('auth');
-Route::put('/ideas/{idea}', [IdeaController::class, 'update'])->name('ideas.update')->middleware('auth');
-Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy'])->name('ideas.destroy')->middleware('auth');
+Route::group(['prefix' => 'ideas/', 'as' => 'ideas.', 'middleware' => ['auth'] ], function () {
+    Route::post('', [IdeaController::class, 'store'])->name('store');
+    Route::get('{idea}', [IdeaController::class, 'show'])->name('show')->withoutMiddleware('auth');
+    Route::get('{idea}/edit', [IdeaController::class, 'edit'])->name('edit');
+    Route::put('{idea}', [IdeaController::class, 'update'])->name('update');
+    Route::delete('{idea}', [IdeaController::class, 'destroy'])->name('destroy');
 
-// For commenting on a post/idea
-Route::post('/ideas/{idea}/comment', [CommentController::class, 'store'])->name('idea.comment.store')->middleware('auth');
+    // For commenting on a post/idea
+    Route::post('{idea}/comment', [CommentController::class, 'store'])->name('comment.store');
+});
 
-// For User information
-Route::get('/register', [UserController::class, 'register'])->name('register');
-Route::post('/register', [UserController::class, 'store']);
-Route::get('/login', [UserController::class, 'login'])->name('login');
-Route::post('/login', [UserController::class, 'authenticate']);
-Route::post('/logout', [UserController::class, 'logout'])->name('logout')->middleware('auth');
+// For User information Routes are in authRoute.php file
 
 Route::get('/terms', function () {
     return view('term');
