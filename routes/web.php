@@ -3,6 +3,7 @@
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IdeaController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,10 @@ Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy'])->name('ideas.
 
 // For commenting on a post/idea
 Route::post('/ideas/{idea}/comment', [CommentController::class, 'store'])->name('idea.comment.store');
+
+// For User information
+Route::get('/register', [UserController::class, 'register'])->name('register');
+Route::post('/register', [UserController::class, 'store']);
 
 Route::get('/terms', function () {
     return view('term');
