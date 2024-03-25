@@ -31,6 +31,9 @@ Route::post('/ideas/{idea}/comment', [CommentController::class, 'store'])->name(
 // For User information
 Route::get('/register', [UserController::class, 'register'])->name('register');
 Route::post('/register', [UserController::class, 'store']);
+Route::get('/login', [UserController::class, 'login'])->name('login');
+Route::post('/login', [UserController::class, 'authenticate']);
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::get('/terms', function () {
     return view('term');
