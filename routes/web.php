@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IdeaController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,9 @@ Route::get('/ideas/{idea}', [IdeaController::class, 'show'])->name('ideas.show')
 Route::get('/ideas/{idea}/edit', [IdeaController::class, 'edit'])->name('ideas.edit');
 Route::put('/ideas/{idea}', [IdeaController::class, 'update'])->name('ideas.update');
 Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy'])->name('ideas.destroy');
+
+// For commenting on a post/idea
+Route::post('/ideas/{idea}/comment', [CommentController::class, 'store'])->name('idea.comment.store');
 
 Route::get('/terms', function () {
     return view('term');

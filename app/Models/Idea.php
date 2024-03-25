@@ -13,4 +13,11 @@ class Idea extends Model
         'content',
         'likes'
     ];
+
+    /**
+     * Getting all comments of the idea from database 
+     */
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
 }
