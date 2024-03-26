@@ -58,17 +58,19 @@
 </div>
 <hr>
 
-
-@if (count($ideas) > 0)
-    @foreach ($ideas as $idea)
-        <div class="mt-3">
-            @include('shared.idea_card')
-        </div>
-    @endforeach
-
-    <div class="mt-2">
-        {{ $ideas->withQueryString()->links() }}
-    </div>
+@if ($editing ?? false)
 @else
-    <p class="text-center">No ideas found</p>
+    @if (count($ideas) > 0)
+        @foreach ($ideas as $idea)
+            <div class="mt-3">
+                @include('shared.idea_card')
+            </div>
+        @endforeach
+
+        <div class="mt-2">
+            {{ $ideas->withQueryString()->links() }}
+        </div>
+    @else
+        <p class="text-center">No ideas found</p>
+    @endif
 @endif
