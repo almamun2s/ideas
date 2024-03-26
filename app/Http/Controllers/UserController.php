@@ -4,10 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        // abort(404);
+    }
     /**
      * Showing user registration page
      *
@@ -39,6 +47,36 @@ class UserController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show(User $profile)
+    {
+        $ideas = $profile->idea()->paginate(2);
+        return view('profile.show', compact('profile', 'ideas' ));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(User $profile)
+    {
+        if (Auth::user()->id !== $profile->id) {
+            abort(401);
+        }
+        $editing = true;
+        return view('profile.show', compact('profile', 'editing'));
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(User $user)
+    {
+        //
+    }
+
+    /**
      * Showing User Login page
      */
     public function login()
@@ -66,7 +104,8 @@ class UserController extends Controller
     /**
      * User Logout
      */
-    public function logout(){
+    public function logout()
+    {
         auth()->logout();
 
         request()->session()->invalidate();
