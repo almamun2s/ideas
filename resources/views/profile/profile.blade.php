@@ -24,15 +24,27 @@
 
             <div class="d-flex justify-content-start">
                 <a href="#" class="fw-light nav-link fs-6 me-3"> <span class="fas fa-user me-1">
-                    </span> 0 Followers </a>
+                    </span> {{ $profile->followers()->count() }} Followers </a>
+                <a href="#" class="fw-light nav-link fs-6 me-3"> <span class="fas fa-user me-1">
+                    </span> {{ $profile->followings()->count() }} Followings </a>
                 <a href="#" class="fw-light nav-link fs-6 me-3"> <span class="fas fa-brain me-1">
-                    </span> {{ $profile->idea()->count() }} </a>
+                    </span> {{ $profile->idea()->count() }} Ideas </a>
                 <a href="#" class="fw-light nav-link fs-6"> <span class="fas fa-comment me-1">
-                    </span> {{ $profile->comment()->count() }} </a>
+                    </span> {{ $profile->comment()->count() }} Comments </a>
             </div>
             @if (Auth::user()->id !== $profile->id)
                 <div class="mt-3">
-                    <button class="btn btn-primary btn-sm"> Follow </button>
+                    @if (Auth::user()->follows($profile))
+                        <form action="{{ route('unfollow', $profile->id) }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-danger btn-sm"> Unfollow </button>
+                        </form>
+                    @else
+                        <form action="{{ route('follow', $profile->id) }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-primary btn-sm"> Follow </button>
+                        </form>
+                    @endif
                 </div>
             @endif
         </div>

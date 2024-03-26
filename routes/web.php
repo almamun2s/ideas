@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,10 @@ Route::resource('ideas', IdeaController::class)->only(['show']);
 // ProfileController
 Route::get('profile', [UserController::class, 'profile'])->middleware('auth')->name('profile');
 Route::resource('profile', UserController::class)->except([ 'index', 'create', 'store', 'destroy'])->middleware('auth');
+
+// Follower Controller
+Route::post('users/{user}/follow', [FollowerController::class, 'follow'])->middleware('auth')->name('follow');
+Route::post('users/{user}/unfollow', [FollowerController::class, 'unfollow'])->middleware('auth')->name('unfollow');
 
 // For User information Routes are in authRoute.php file
 

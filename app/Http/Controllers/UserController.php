@@ -77,6 +77,8 @@ class UserController extends Controller
             $imagePath = request()->file('image')->store('profile', 'public');
             $validated['image'] = $imagePath;
 
+            // Storage::disk('public')->delete($profile->image ?? '');
+
             if (!is_null($profile->image)) {
                 if (Storage::disk('public')->exists($profile->image)) {
                     Storage::disk('public')->delete($profile->image);

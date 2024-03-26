@@ -46,11 +46,11 @@ class User extends Authenticatable
     ];
 
     public function idea(){
-        return $this->hasMany(Idea::class);
+        return $this->hasMany(Idea::class)->latest();
     }
 
     public function comment(){
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class)->latest();
     }
 
     public function getImageURL(){
@@ -59,5 +59,17 @@ class User extends Authenticatable
         }
 
         return "https://api.dicebear.com/6.x/fun-emoji/svg?seed=$this->name";
+    }
+
+    public function followings(){
+        return $this->belongsToMany(User::class, 'follower_user', 'follower_id', 'user_id')->withTimestamps();
+    }
+    
+    public function followers(){
+        return $this->belongsToMany(User::class, 'follower_user', 'user_id', 'follower_id')->withTimestamps();
+    }
+
+    public function follows(User $user){
+        return $this->followings()->where('user_id', $user->id)->exists();
     }
 }

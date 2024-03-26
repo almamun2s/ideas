@@ -5,6 +5,7 @@
         @include('shared.left_bar')
         <div class="col-6">
             <div class="mt-3">
+                @include('shared.success_message')
                 @if ($editing ?? false)
                     @include('profile.edit')
                 @else
