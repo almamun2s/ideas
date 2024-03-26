@@ -3,7 +3,6 @@
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IdeaController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +26,8 @@ Route::resource('ideas', IdeaController::class)->except(['index', 'create', 'sho
 Route::resource('ideas', IdeaController::class)->only(['show']);
 
 // ProfileController
-Route::resource('profile', UserController::class)->except(['create', 'store', 'destroy'])->middleware('auth');
+Route::get('profile', [UserController::class, 'profile'])->middleware('auth')->name('profile');
+Route::resource('profile', UserController::class)->except([ 'index', 'create', 'store', 'destroy'])->middleware('auth');
 
 // For User information Routes are in authRoute.php file
 

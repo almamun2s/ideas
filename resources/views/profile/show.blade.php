@@ -5,7 +5,11 @@
         @include('shared.left_bar')
         <div class="col-6">
             <div class="mt-3">
-                @include('profile.profile')
+                @if ($editing ?? false)
+                    @include('profile.edit')
+                @else
+                    @include('profile.profile')
+                @endif
             </div>
         </div>
         <div class="col-3">

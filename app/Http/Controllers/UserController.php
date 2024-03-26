@@ -6,16 +6,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        // abort(404);
-    }
     /**
      * Showing user registration page
      *
@@ -52,7 +46,7 @@ class UserController extends Controller
     public function show(User $profile)
     {
         $ideas = $profile->idea()->paginate(2);
-        return view('profile.show', compact('profile', 'ideas' ));
+        return view('profile.show', compact('profile', 'ideas'));
     }
 
     /**
@@ -71,9 +65,26 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(User $user)
+    public function update(User $profile)
     {
-        //
+        $validated = request()->validate([
+            'name' => 'required|min:3|max:30',
+            'bio' => 'required|min:10|max:255',
+            'image' => 'image'
+        ]);
+
+        if (request()->has('image')) {
+            $imagePath = request()->file('image')->store('profile', 'public');
+            $validated['image'] = $imagePath;
+
+            if (!is_null($profile->image)) {
+                if (Storage::disk('public')->exists($profile->image)) {
+                    Storage::disk('public')->delete($profile->image);
+                }
+            }
+        }
+        $profile->update($validated);
+        return redirect()->route('profile');
     }
 
     /**
@@ -99,6 +110,11 @@ class UserController extends Controller
             return redirect()->route('dashboard')->with('success', 'Logged in Successfully!');
         }
         return redirect()->back()->withErrors(['email' => 'Email or password did not match.']);
+    }
+
+    public function profile()
+    {
+        return $this->show(auth()->user());
     }
 
     /**

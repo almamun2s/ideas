@@ -2,25 +2,25 @@
     <div class="px-3 pt-4 pb-2">
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
-                <img style="width:50px" class="me-2 avatar-sm rounded-circle"
-                    src="https://api.dicebear.com/6.x/fun-emoji/svg?seed={{ $idea->user->name }}"
+                <img style="width:50px" class="me-2 avatar-sm rounded-circle" src="{{ $idea->user->getImageURL() }}"
                     alt="{{ $idea->user->name }}">
                 <div>
                     <h5 class="card-title mb-0"><a
                             href="{{ route('profile.show', $idea->user->id) }}">{{ $idea->user->name }} </a></h5>
                 </div>
             </div>
-            {{-- @dump($idea->user->id) --}}
             <div class="d-flex">
                 <a class="mx-2" href="{{ route('ideas.show', $idea->id) }} ">View</a>
-                @if (Auth::user()->id === $idea->user->id)
-                    <a class="mx-2" href="{{ route('ideas.edit', $idea->id) }} ">Edit </a>
-                    <form action=" {{ route('ideas.destroy', $idea->id) }} " method="post">
-                        @csrf
-                        @method('delete')
-                        <button class="btn btn-danger btn-sm">X</button>
-                    </form>
-                @endif
+                @auth
+                    @if (Auth::user()->id === $idea->user->id)
+                        <a class="mx-2" href="{{ route('ideas.edit', $idea->id) }} ">Edit </a>
+                        <form action=" {{ route('ideas.destroy', $idea->id) }} " method="post">
+                            @csrf
+                            @method('delete')
+                            <button class="btn btn-danger btn-sm">X</button>
+                        </form>
+                    @endif
+                @endauth
             </div>
         </div>
     </div>
