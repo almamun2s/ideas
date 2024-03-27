@@ -39,7 +39,9 @@ class UserController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        Mail::to($user->email)->send(new WelcomeMail($user));
+        // This is for mailing and it works.
+        // Mail::to($user->email)->send(new WelcomeMail($user));
+        
         return redirect()->route('dashboard')->with('success', 'Account created Successfully!');
     }
 
