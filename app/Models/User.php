@@ -45,31 +45,60 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function idea(){
+    public function idea()
+    {
         return $this->hasMany(Idea::class)->latest();
     }
 
-    public function comment(){
+    public function comment()
+    {
         return $this->hasMany(Comment::class)->latest();
     }
 
-    public function getImageURL(){
+    public function getImageURL()
+    {
         if ($this->image) {
-            return url('storage/' . $this->image );
+            return url('storage/' . $this->image);
         }
 
         return "https://api.dicebear.com/6.x/fun-emoji/svg?seed=$this->name";
     }
 
-    public function followings(){
+    /**
+     * Getting Followings users
+     */
+
+    public function followings()
+    {
         return $this->belongsToMany(User::class, 'follower_user', 'follower_id', 'user_id')->withTimestamps();
     }
-    
-    public function followers(){
+
+    /**
+     * Getting Followers users
+     */
+
+    public function followers()
+    {
         return $this->belongsToMany(User::class, 'follower_user', 'user_id', 'follower_id')->withTimestamps();
     }
 
-    public function follows(User $user){
+    /**
+     * Checking if follows or not
+     */
+    public function follows(User $user)
+    {
         return $this->followings()->where('user_id', $user->id)->exists();
+    }
+
+    public function likes()
+    {
+        return $this->belongsToMany(Idea::class, 'idea_like')->withTimestamps();
+    }
+    /**
+     * Checking if likes or not
+     */
+    public function likesIdea(Idea $idea)
+    {
+        return $this->likes()->where('idea_id', $idea->id)->exists();
     }
 }

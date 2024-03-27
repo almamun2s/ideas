@@ -16,7 +16,6 @@ class Idea extends Model
     ];
     protected $fillable = [
         'content',
-        'likes',
         'user_id'
     ];
 
@@ -28,7 +27,17 @@ class Idea extends Model
     }
 
 
+    /**
+     * Getting The user who is the owner of this Idea
+     */
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Getting Likes of users
+     */
+    public function likes(){
+        return $this->belongsToMany(User::class, 'idea_like')->withTimestamps();
     }
 }

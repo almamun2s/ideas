@@ -9,13 +9,15 @@
                     <span class="fs-6 text-muted">{{ $profile->email }}</span>
                 </div>
             </div>
-            @if (Auth::user()->id === $profile->id)
-                @if (($editing ?? false) != true)
-                    <div>
-                        <a href="{{ route('profile.edit', $profile->id) }}">Edit</a>
-                    </div>
+            @auth
+                @if (Auth::user()->id === $profile->id)
+                    @if (($editing ?? false) != true)
+                        <div>
+                            <a href="{{ route('profile.edit', $profile->id) }}">Edit</a>
+                        </div>
+                    @endif
                 @endif
-            @endif
+            @endauth
 
         </div>
         <div class="px-2 mt-4">
@@ -29,24 +31,28 @@
                     </span> {{ $profile->followings()->count() }} Followings </a>
                 <a href="#" class="fw-light nav-link fs-6 me-3"> <span class="fas fa-brain me-1">
                     </span> {{ $profile->idea()->count() }} Ideas </a>
-                <a href="#" class="fw-light nav-link fs-6"> <span class="fas fa-comment me-1">
+                <a href="#" class="fw-light nav-link fs-6 me-3"> <span class="fas fa-comment me-1">
                     </span> {{ $profile->comment()->count() }} Comments </a>
+                <a href="#" class="fw-light nav-link fs-6 me-3"> <span class="fas fa-heart me-1">
+                    </span> {{ $profile->likes()->count() }} Likes </a>
             </div>
-            @if (Auth::user()->id !== $profile->id)
-                <div class="mt-3">
-                    @if (Auth::user()->follows($profile))
-                        <form action="{{ route('unfollow', $profile->id) }}" method="post">
-                            @csrf
-                            <button type="submit" class="btn btn-danger btn-sm"> Unfollow </button>
-                        </form>
-                    @else
-                        <form action="{{ route('follow', $profile->id) }}" method="post">
-                            @csrf
-                            <button type="submit" class="btn btn-primary btn-sm"> Follow </button>
-                        </form>
-                    @endif
-                </div>
-            @endif
+            @auth
+                @if (Auth::user()->id !== $profile->id)
+                    <div class="mt-3">
+                        @if (Auth::user()->follows($profile))
+                            <form action="{{ route('unfollow', $profile->id) }}" method="post">
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-sm"> Unfollow </button>
+                            </form>
+                        @else
+                            <form action="{{ route('follow', $profile->id) }}" method="post">
+                                @csrf
+                                <button type="submit" class="btn btn-primary btn-sm"> Follow </button>
+                            </form>
+                        @endif
+                    </div>
+                @endif
+            @endauth
         </div>
     </div>
 </div>
