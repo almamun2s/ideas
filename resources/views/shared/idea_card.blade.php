@@ -47,7 +47,7 @@
         <div class="d-flex justify-content-between">
             @include('ideas.like_button')
             <div>
-                <span class="fs-6 fw-light text-muted"> <span class="fas fa-clock"> </span> {{ $idea->created_at }}
+                <span class="fs-6 fw-light text-muted"> <span class="fas fa-clock"> </span> {{ $idea->created_at->diffForHumans() }}
                 </span>
             </div>
         </div>
