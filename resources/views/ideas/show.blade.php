@@ -1,4 +1,5 @@
 @extends('layouts.layout')
+@section('title', Str::limit($idea->content, 15, '...'))
 
 @section('content')
     <div class="row">

@@ -1,4 +1,9 @@
 @extends('layouts.layout')
+@if ($editing ?? false)
+    @section('title', 'Edit Profile')
+@else
+    @section('title', $profile->name)
+@endif
 
 @section('content')
     <div class="row">

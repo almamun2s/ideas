@@ -1,5 +1,7 @@
 @extends('layouts.layout')
 
+@section('title', 'Dashboard')
+
 @section('content')
     <div class="row">
         @include('shared.left_bar')
