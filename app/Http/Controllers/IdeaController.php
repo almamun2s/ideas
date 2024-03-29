@@ -44,10 +44,15 @@ class IdeaController extends Controller
      */
     public function destroy(Idea $idea)
     {
+        // //  Check user Manually
         // if (auth()->id() !== $idea->user_id ) {
         //     abort(401);
         // }
-        $this->authorize('idea.delete', $idea );
+        // Check user by Gate
+        // $this->authorize('idea.delete', $idea);
+
+        // Check user by Policy 
+        $this->authorize('delete', $idea );
 
         $idea->delete();
 
@@ -60,10 +65,15 @@ class IdeaController extends Controller
      */
     public function edit(Idea $idea)
     {
+        // //  Check user Manually
         // if (auth()->id() !== $idea->user_id ) {
         //     abort(401);
         // }
-        $this->authorize('idea.edit', $idea );
+        // Check user by Gate
+        // $this->authorize('idea.edit', $idea);
+
+        // Check user by Policy 
+        $this->authorize('update', $idea );
 
         return view('ideas.show', [
             'idea' => $idea,
@@ -78,10 +88,15 @@ class IdeaController extends Controller
      */
     public function update(Idea $idea)
     {
+        // //  Check user Manually
         // if (auth()->id() !== $idea->user_id ) {
         //     abort(401);
         // }
-        $this->authorize('idea.edit', $idea );
+        // Check user by Gate
+        // $this->authorize('idea.edit', $idea);
+
+        // Check user by Policy 
+        $this->authorize('update', $idea);
 
         $validate = request()->validate([
             'content' => 'required|min:5|max:255'

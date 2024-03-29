@@ -13,7 +13,7 @@
                 <a class="mx-2" href="{{ route('ideas.show', $idea->id) }} ">View</a>
                 @auth
                     {{-- @if (Auth::user()->id === $idea->user->id) --}}
-                    @can('idea.edit', $idea)
+                    @can('update', $idea)
                         <a class="mx-2" href="{{ route('ideas.edit', $idea->id) }} ">Edit </a>
                         <form action=" {{ route('ideas.destroy', $idea->id) }} " method="post">
                             @csrf
