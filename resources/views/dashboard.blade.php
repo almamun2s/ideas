@@ -19,7 +19,7 @@
                     {{ $ideas->withQueryString()->links() }}
                 </div>
             @else
-                <p class="text-center">No ideas found</p>
+                <p class="text-center"> {{ __('ideas.idea_not_found')}} </p>
             @endif
         </div>
         <div class="col-3">

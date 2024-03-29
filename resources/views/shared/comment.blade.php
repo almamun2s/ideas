@@ -5,7 +5,7 @@
             <textarea name="content" style="resize: none;" class="fs-6 form-control" rows="1"></textarea>
         </div>
         <div>
-            <button type="submit" class="btn btn-primary btn-sm"> Post Comment </button>
+            <button type="submit" class="btn btn-primary btn-sm"> {{ __('ideas.comment')}} </button>
         </div>
     </form>
 

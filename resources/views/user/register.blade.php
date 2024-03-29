@@ -6,7 +6,7 @@
         <div class="col-12 col-sm-8 col-md-6">
             <form class="form mt-5" action="{{ route('register') }}" method="post">
                 @csrf
-                <h3 class="text-center text-dark">Register</h3>
+                <h3 class="text-center text-dark">{{ __('ideas.register')}}</h3>
                 <div class="form-group">
                     <label for="name" class="text-dark">Name:</label><br>
                     <input type="text" name="name" class="form-control" value="{{old('name')}}">
@@ -34,9 +34,9 @@
                 </div>
                 <div class="form-group">
                     <label for="remember-me" class="text-dark"></label><br>
-                    <input type="submit" name="submit" class="btn btn-dark btn-md" value="Register">
+                    <input type="submit" name="submit" class="btn btn-dark btn-md" value="{{ __('ideas.register')}}">
                     <div class="text-right mt-2 float-end">
-                        <a href="/login" class="text-dark">Login here</a>
+                        <a href="/login" class="text-dark">{{ __('ideas.login')}}</a>
                     </div>
                 </div>
             </form>

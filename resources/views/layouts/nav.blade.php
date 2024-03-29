@@ -11,16 +11,16 @@
             <ul class="navbar-nav">
                 @guest
                     <li class="nav-item">
-                        <a class="nav-link {{ Route::is('login') ? 'active' : '' }}" aria-current="page" href="{{ route('login') }}">Login</a>
+                        <a class="nav-link {{ Route::is('login') ? 'active' : '' }}" aria-current="page" href="{{ route('login') }}">{{ __('ideas.login')}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Route::is('register') ? 'active' : '' }}" href="{{ route('register') }}">Register</a>
+                        <a class="nav-link {{ Route::is('register') ? 'active' : '' }}" href="{{ route('register') }}">{{ __('ideas.register')}}</a>
                     </li>
                 @endguest
                 @auth
                 @if (Auth::user()->is_admin )
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::is('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
+                    <a class="nav-link {{ Route::is('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">{{ __('ideas.admin_dashboard')}}</a>
                 </li>                    
                 @endif
                     <li class="nav-item">
