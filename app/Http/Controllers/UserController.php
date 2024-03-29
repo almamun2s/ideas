@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Mail\WelcomeMail;
 use Illuminate\Http\Request;
@@ -25,23 +27,18 @@ class UserController extends Controller
      * Storing user data to db
      *
      */
-    public function store()
+    public function store(CreateUserRequest $request)
     {
-        $validated = request()->validate([
-            'name' => 'required|min:3|max:30',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6|confirmed',
-        ]);
+        $validated = $request->validated();
 
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
-
         // This is for mailing and it works.
         // Mail::to($user->email)->send(new WelcomeMail($user));
-        
+
         return redirect()->route('dashboard')->with('success', 'Account created Successfully!');
     }
 
@@ -59,6 +56,7 @@ class UserController extends Controller
      */
     public function edit(User $profile)
     {
+        // Authorized by policy 
         $this->authorize('update', $profile);
         $editing = true;
         return view('profile.show', compact('profile', 'editing'));
@@ -68,17 +66,20 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(User $profile)
+    public function update(UpdateUserRequest $request, User $profile)
     {
+        // Authorized by policy 
         $this->authorize('update', $profile);
-        $validated = request()->validate([
-            'name' => 'required|min:3|max:30',
-            'bio' => 'required|min:10|max:255',
-            'image' => 'image'
-        ]);
 
-        if (request()->has('image')) {
-            $imagePath = request()->file('image')->store('profile', 'public');
+        // $validated = request()->validate([
+        //     'name' => 'required|min:3|max:30',
+        //     'bio' => 'required|min:10|max:255',
+        //     'image' => 'image'
+        // ]);
+        $validated = $request->validated();
+
+        if ($request->has('image')) {
+            $imagePath = $request->file('image')->store('profile', 'public');
             $validated['image'] = $imagePath;
 
             // Storage::disk('public')->delete($profile->image ?? '');
