@@ -12,14 +12,16 @@
             <div class="d-flex">
                 <a class="mx-2" href="{{ route('ideas.show', $idea->id) }} ">View</a>
                 @auth
-                    @if (Auth::user()->id === $idea->user->id)
+                    {{-- @if (Auth::user()->id === $idea->user->id) --}}
+                    @can('idea.edit', $idea)
                         <a class="mx-2" href="{{ route('ideas.edit', $idea->id) }} ">Edit </a>
                         <form action=" {{ route('ideas.destroy', $idea->id) }} " method="post">
                             @csrf
                             @method('delete')
                             <button class="btn btn-danger btn-sm">X</button>
                         </form>
-                    @endif
+                    @endcan
+                    {{-- @endif --}}
                 @endauth
             </div>
         </div>
@@ -47,7 +49,8 @@
         <div class="d-flex justify-content-between">
             @include('ideas.like_button')
             <div>
-                <span class="fs-6 fw-light text-muted"> <span class="fas fa-clock"> </span> {{ $idea->created_at->diffForHumans() }}
+                <span class="fs-6 fw-light text-muted"> <span class="fas fa-clock"> </span>
+                    {{ $idea->created_at->diffForHumans() }}
                 </span>
             </div>
         </div>
