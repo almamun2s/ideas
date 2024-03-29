@@ -59,9 +59,7 @@ class UserController extends Controller
      */
     public function edit(User $profile)
     {
-        if (Auth::user()->id !== $profile->id) {
-            abort(401);
-        }
+        $this->authorize('update', $profile);
         $editing = true;
         return view('profile.show', compact('profile', 'editing'));
 
@@ -72,6 +70,7 @@ class UserController extends Controller
      */
     public function update(User $profile)
     {
+        $this->authorize('update', $profile);
         $validated = request()->validate([
             'name' => 'required|min:3|max:30',
             'bio' => 'required|min:10|max:255',

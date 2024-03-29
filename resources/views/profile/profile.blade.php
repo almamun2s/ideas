@@ -9,15 +9,17 @@
                     <span class="fs-6 text-muted">{{ $profile->email }}</span>
                 </div>
             </div>
-            @auth
-                @if (Auth::user()->id === $profile->id)
-                    @if (($editing ?? false) != true)
-                        <div>
-                            <a href="{{ route('profile.edit', $profile->id) }}">Edit</a>
-                        </div>
-                    @endif
+            {{-- @auth --}}
+            {{-- @if (Auth::user()->id === $profile->id) --}}
+            @can('update', $profile)
+                @if (($editing ?? false) != true)
+                    <div>
+                        <a href="{{ route('profile.edit', $profile->id) }}">Edit</a>
+                    </div>
                 @endif
-            @endauth
+            @endcan
+            {{-- @endif --}}
+            {{-- @endauth --}}
 
         </div>
         <div class="px-2 mt-4">
@@ -37,7 +39,8 @@
                     </span> {{ $profile->likes()->count() }} Likes </a>
             </div>
             @auth
-                @if (Auth::user()->id !== $profile->id)
+                {{-- @if (Auth::user()->id !== $profile->id) --}}
+                @if (Auth::user()->isNot($profile))
                     <div class="mt-3">
                         @if (Auth::user()->follows($profile))
                             <form action="{{ route('unfollow', $profile->id) }}" method="post">
