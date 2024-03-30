@@ -21,6 +21,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/lang/{lang}', function ($lang) {
+    app()->setLocale($lang);
+    session()->put('locale', $lang);
+    return redirect()->back();
+})->name('lang');
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 // For commenting on a post/idea
@@ -32,7 +37,7 @@ Route::resource('ideas', IdeaController::class)->only(['show']);
 // Profile Routes
 Route::get('profile', [UserController::class, 'profile'])->middleware('auth')->name('profile');
 Route::resource('profile', UserController::class)->only('show');
-Route::resource('profile', UserController::class)->only([ 'edit', 'update' ])->middleware('auth');
+Route::resource('profile', UserController::class)->only(['edit', 'update'])->middleware('auth');
 
 // Follower Routes
 Route::post('users/{user}/follow', [FollowerController::class, 'follow'])->middleware('auth')->name('follow');
@@ -42,7 +47,7 @@ Route::post('users/{user}/unfollow', [FollowerController::class, 'unfollow'])->m
 Route::post('idea/{idea}/like', [IdeaLikeController::class, 'like'])->middleware('auth')->name('like');
 Route::post('idea/{idea}/unlike', [IdeaLikeController::class, 'unlike'])->middleware('auth')->name('unlike');
 
-Route::get('/feed', FeedController::class )->middleware('auth')->name('feed');
+Route::get('/feed', FeedController::class)->middleware('auth')->name('feed');
 
 // For User information Routes are in authRoute.php file
 
