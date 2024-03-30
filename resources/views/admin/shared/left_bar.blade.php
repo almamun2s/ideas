@@ -12,6 +12,11 @@
                         <span>Users</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::is('admin.ideas') ? ' text-white bg-primary ' : '' }}" href="{{ route('admin.ideas') }}">
+                        <span>Ideas</span>
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="card-footer text-center py-2">
