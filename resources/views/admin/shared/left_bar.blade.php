@@ -17,6 +17,11 @@
                         <span>Ideas</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::is('admin.comment.index') ? ' text-white bg-primary ' : '' }}" href="{{ route('admin.comment.index') }}">
+                        <span>Comments</span>
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="card-footer text-center py-2">

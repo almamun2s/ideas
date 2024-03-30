@@ -22,12 +22,16 @@
                     @foreach ($ideas as $idea)
                         <tr>
                             <td>{{ $idea->id }}</td>
-                            <td>{{ $idea->user->name }}</td>
+                            <td>
+                                <a href="{{ route('profile.show', $idea->user) }}">
+                                    {{ $idea->user->name }}
+                                </a>
+                            </td>
                             <td>{{ $idea->content }}</td>
                             <td>{{ $idea->created_at->diffForHumans() }}</td>
                             <td>
-                                <a href="{{ route('ideas.show', $idea ) }}">View</a>
-                                <a href="{{ route('ideas.edit', $idea ) }}">Edit</a>
+                                <a href="{{ route('ideas.show', $idea) }}">View</a>
+                                <a href="{{ route('ideas.edit', $idea) }}">Edit</a>
                             </td>
                         </tr>
                     @endforeach

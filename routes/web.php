@@ -10,6 +10,7 @@ use App\Http\Controllers\IdeaLikeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\IdeaController as AdminIdeaController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\CommentController as AdminCommentController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 
 /*
@@ -64,4 +65,5 @@ Route::middleware(['auth', 'can:admin'])->prefix('/admin')->as('admin.')->group(
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/users', [AdminUserController::class, 'index'])->name('users');
     Route::get('/ideas', [AdminIdeaController::class, 'index'])->name('ideas');
+    Route::resource('comment', AdminCommentController::class)->only('index', 'destroy');
 });
