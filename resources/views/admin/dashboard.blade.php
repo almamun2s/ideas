@@ -1,6 +1,12 @@
 @extends('layouts.layout')
-@section('title', 'Admin Dashboard')
+@section('title', 'Dashboard Admin')
 
 @section('content')
-    <h1>Admin Panel</h1>
+    <div class="row">
+        @include('admin.shared.left_bar')
+        <div class="col-9">
+            @include('shared.success_message')
+            <h1>Admin Dashboard</h1>
+        </div>
+    </div>
 @endsection
