@@ -26,6 +26,7 @@ Route::get('/lang/{lang}', function ($lang) {
     session()->put('locale', $lang);
     return redirect()->back();
 })->name('lang');
+
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 // For commenting on a post/idea
