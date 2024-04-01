@@ -48,7 +48,14 @@ class UserController extends Controller
     public function show(User $profile)
     {
         $ideas = $profile->idea()->paginate(2);
-        return view('profile.show', compact('profile', 'ideas'));
+        $ideasToCountLikes = $profile->idea;
+        $totalLikes = 0;
+        if (count($ideasToCountLikes) > 0) {
+            foreach ($ideasToCountLikes as $idea ) {
+                $totalLikes = $totalLikes + $idea->likes_count;
+            }
+        }
+        return view('profile.show', compact('profile', 'ideas', 'totalLikes' ));
     }
 
     /**

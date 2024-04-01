@@ -36,7 +36,7 @@
                 <a href="#" class="fw-light nav-link fs-6 me-3"> <span class="fas fa-comment me-1">
                     </span> {{ $profile->comment()->count() }} Comments </a>
                 <a href="#" class="fw-light nav-link fs-6 me-3"> <span class="fas fa-heart me-1">
-                    </span> {{ $profile->likes()->count() }} Likes </a>
+                    </span> {{ $totalLikes }} Likes </a>
             </div>
             @auth
                 {{-- @if (Auth::user()->id !== $profile->id) --}}
